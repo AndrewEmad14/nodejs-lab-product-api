@@ -1,0 +1,11 @@
+const express = require('express');
+
+// create a router instance
+const router = express.Router();
+
+// define other routes
+
+router.use('/products', require('./products'));
+router.use('/users', require('./users'));
+
+module.exports = router;
