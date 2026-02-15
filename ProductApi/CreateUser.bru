@@ -5,11 +5,22 @@ meta {
 }
 
 post {
-  url: 
-  body: none
+  url: {{baseUrl}}/users/
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "userName": "johndoe_2024",
+    "firstName": "John",
+    "lastName": "Doe",
+    "dob": "1995-06-15"
+  }
+  
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }

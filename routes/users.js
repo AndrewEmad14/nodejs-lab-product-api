@@ -10,14 +10,20 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  const {id} = Number.parseInt(req.params);
-  const [user] = await userController.findById(id);
+  const {id} = req.params;
+  const user = await userController.findById(id);
   res.json([user]);
 });
 
 router.get('/', async (req, res) => {
   const [user] = await userController.findAllUsers();
   res.json([user]);
+});
+
+router.delete('/:id', async (req, res) => {
+  const {id} = req.params;
+  const status = await userController.deleteUserById({id});
+  res.json([status]);
 });
 
 module.exports = router;

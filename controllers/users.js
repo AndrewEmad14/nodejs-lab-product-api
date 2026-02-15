@@ -6,10 +6,10 @@ const createUser = async (data) => {
 };
 
 const findById = async (id) => {
-  const users = await Users.findById(id)
-    .select('userName')
+  const user = await Users.findById(id)
+    .select('firstName -_id')
     .exec();
-  return users;
+  return user;
 };
 const findAllUsers = async () => {
   const usersList = await Users.find({})
@@ -17,8 +17,15 @@ const findAllUsers = async () => {
     .exec();
   return usersList;
 };
+
+const deleteUserById = async ({id}) => {
+  const status = await Users.deleteOne({_id: id})
+    .exec();
+  return status;
+};
 module.exports = {
   createUser,
   findById,
-  findAllUsers
+  findAllUsers,
+  deleteUserById
 };

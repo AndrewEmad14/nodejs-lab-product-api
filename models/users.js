@@ -5,25 +5,31 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'User name is required'],
     unique: true,
-    min: [8, 'Username at least 8 characters']
+    minLength: [8, 'Username at least 8 characters'],
+    validate: [uniqueValidator, 'username must be unique']
   },
   firstName: {
     type: String,
     required: [true, 'first name is required'],
-    min: 3,
-    max: 15
+    minLength: 3,
+    maxLenth: 15
   },
   lastName: {
     type: String,
     required: [true, 'Last name is required'],
-    min: [3, 'Username at least 3 characters'],
-    max: [15, 'Username at least 15 characters']
+    minLength: [3, 'Username at least 3 characters'],
+    maxLenth: [15, 'Username at least 15 characters']
   },
   dob: {
     type: Date
   }
 
 }, {timestamps: true});
+
+async function uniqueValidator(value) {
+  const user = await mongoose.models.Users.findOne({userName: value});
+  return !user;
+}
 
 const Users = mongoose.model('Users', userSchema);
 
