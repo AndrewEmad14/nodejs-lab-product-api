@@ -1,0 +1,22 @@
+meta {
+  name: complex query
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/products/?limit=1&skip=0&status='available'
+  body: none
+  auth: inherit
+}
+
+params:query {
+  limit: 1
+  skip: 0
+  status: 'available'
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

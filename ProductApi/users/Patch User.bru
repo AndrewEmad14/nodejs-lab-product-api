@@ -1,0 +1,28 @@
+meta {
+  name: Patch User
+  type: http
+  seq: 2
+}
+
+patch {
+  url: {{baseUrl}}/users/:id
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 6991affcd937eb8665138036
+}
+
+body:json {
+  {
+    "userName":"andrew12",
+    "firstName":"andrew",
+    "lastName":"emad"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

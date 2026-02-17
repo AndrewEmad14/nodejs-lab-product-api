@@ -18,14 +18,19 @@ const findAllUsers = async () => {
   return usersList;
 };
 
-const deleteUserById = async ({id}) => {
-  const status = await Users.deleteOne({_id: id})
-    .exec();
+const deleteUserById = async (id) => {
+  const status = await Users.deleteOne({_id: id}).exec();
   return status;
+};
+
+const updateUser = async (id, data) => {
+  const updatedUser = Users.updateOne({_id: id}, data, {runValidators: true});
+  return updatedUser;
 };
 module.exports = {
   createUser,
   findById,
   findAllUsers,
-  deleteUserById
+  deleteUserById,
+  updateUser
 };

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const encyption = require('../helpers/encryption');
 
 const userSchema = new mongoose.Schema({
   userName: {
@@ -20,6 +21,11 @@ const userSchema = new mongoose.Schema({
     minLength: [3, 'Username at least 3 characters'],
     maxLenth: [15, 'Username at least 15 characters']
   },
+  password: {
+    type: String,
+    minLength: [8, 'password has to be atleast 8 characters']
+
+  },
   dob: {
     type: Date
   }
@@ -30,6 +36,9 @@ async function uniqueValidator(value) {
   const user = await mongoose.models.Users.findOne({userName: value});
   return !user;
 }
+userSchema.pre('save', function () {
+  this.password = encyption.hashPassword(this.password);
+});
 
 const Users = mongoose.model('Users', userSchema);
 

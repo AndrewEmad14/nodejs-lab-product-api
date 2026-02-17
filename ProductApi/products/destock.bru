@@ -1,0 +1,26 @@
+meta {
+  name: destock
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{baseUrl}}/products/:id/destock
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 6991cccfaa8b0880862edd8e
+}
+
+body:json {
+  {
+    "quantity":1
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

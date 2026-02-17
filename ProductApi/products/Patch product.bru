@@ -1,0 +1,31 @@
+meta {
+  name: Patch product
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/products/:id
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 6991c23cbbd0bce0215f101d
+}
+
+body:json {
+  {
+    "owner":"6991bcc58069375f8923ff9c",
+    "name":"lenovo",
+    "categories":[
+      "laptop"
+    ],
+    "quantity":"1"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

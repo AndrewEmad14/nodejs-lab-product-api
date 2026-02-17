@@ -1,0 +1,28 @@
+meta {
+  name: Create product
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/products/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "owner":"6991bcc58069375f8923ff9c",
+    "name":"Hp_laptop",
+    "categories":[
+      "laptop"
+    ],
+    "quantity":"1"
+    
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

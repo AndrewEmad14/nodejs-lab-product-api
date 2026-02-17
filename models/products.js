@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const productSchema = new mongoose.Schema({
   owner: {
     type: mongoose.ObjectId,
-    ref: 'Users', // The name of the model you are referencing
+    ref: 'Users',
     required: [true, 'owner is required']
   },
   name: {
@@ -11,7 +11,8 @@ const productSchema = new mongoose.Schema({
     required: [true, 'Name is required'],
     unique: true,
     minLength: [5, 'A name must be at least 5 char'],
-    maxLength: [20, 'A name must be at most 20 char']
+    maxLength: [20, 'A name must be at most 20 char'],
+    validate: [uniqueValidator, 'username must be unique']
   },
   categories: {
     type: [String],
@@ -19,10 +20,11 @@ const productSchema = new mongoose.Schema({
   },
   quantity: {
     type: Number,
-    default: 1
+    default: 1,
+    min: 0
   }
 
-}, {timestamps: true});
+}, {timestamps: true, toJSON: {virtuals: true}});
 
 productSchema.virtual('status').get(function () {
   if (this.quantity > 2) {
@@ -33,7 +35,10 @@ productSchema.virtual('status').get(function () {
     return 'low stock';
   }
 });
-
+async function uniqueValidator(value) {
+  const product = await mongoose.models.Products.findOne({name: value});
+  return !product;
+}
 const Products = mongoose.model('Products', productSchema);
 
 module.exports = Products;

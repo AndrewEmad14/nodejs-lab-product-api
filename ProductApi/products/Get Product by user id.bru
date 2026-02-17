@@ -1,17 +1,13 @@
 meta {
-  name: delete user
+  name: Get Product by user id
   type: http
   seq: 3
 }
 
-delete {
-  url: {{baseUrl}}/users/:id
+get {
+  url: {{baseUrl}}/products/
   body: none
   auth: inherit
-}
-
-params:path {
-  id: 69914d06074178b5acb712b4
 }
 
 settings {

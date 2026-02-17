@@ -1,5 +1,6 @@
 const express = require('express');
 const {userController} = require('../controllers');
+const {productController} = require('../controllers');
 
 const router = express.Router();
 
@@ -22,8 +23,24 @@ router.get('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const {id} = req.params;
-  const status = await userController.deleteUserById({id});
+  const status = await userController.deleteUserById(id);
   res.json([status]);
 });
 
+router.patch('/:id', async (req, res) => {
+  const {body} = req;
+  const {id} = req.params;
+  const {acknowledged} = await userController.updateUser(id, body);
+  if (acknowledged) {
+    res.status(202).json({message: 'user was edited successfully'});
+  } else {
+    res.status(400).json({message: 'Bad request'});
+  }
+});
+
+router.get('/:userId/products', async (req, res) => {
+  const {userId} = req.params;
+  const product = await productController.findProductsbyUserId(userId);
+  res.json(product);
+});
 module.exports = router;
