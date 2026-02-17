@@ -30,7 +30,11 @@ const userSchema = new mongoose.Schema({
     type: Date
   }
 
-}, {timestamps: true});
+}, {toJSON: {transform(doc, ret, options) {
+  delete ret.password;
+  delete ret.__v;
+  return ret;
+}}}, {timestamps: true});
 
 async function uniqueValidator(value) {
   const user = await mongoose.models.Users.findOne({userName: value});

@@ -1,6 +1,6 @@
 const express = require('express');
 const {productController} = require('../controllers');
-const {quantityValidator} = require('../helpers/validators');
+const {quantityValidator, userValidator, authMiddleware} = require('../helpers/validators');
 
 const router = express.Router();
 router.get('/', async (req, res) => {
@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
   const product = await productController.createProduct(body);
   res.json([product]);
 });
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', authMiddleware, userValidator, async (req, res) => {
   const {body} = req;
   const {id} = req.params;
   const {acknowledged} = await productController.updateProduct(id, body);
@@ -26,7 +26,7 @@ router.patch('/:id', async (req, res) => {
     res.status(400).send('Bad request');
   }
 });
-router.patch('/:id/restock', async (req, res) => {
+router.patch('/:id/restock', userValidator, async (req, res) => {
   const {body} = req;
   const {id} = req.params;
   const {acknowledged} = await productController.restockProduct(id, body);
@@ -36,7 +36,7 @@ router.patch('/:id/restock', async (req, res) => {
     res.status(400).send('Bad request');
   }
 });
-router.patch('/:id/destock', quantityValidator, async (req, res) => {
+router.patch('/:id/destock', userValidator, quantityValidator, async (req, res) => {
   const {body} = req;
   const {id} = req.params;
   const {acknowledged} = await productController.destockProduct(id, body);
@@ -46,7 +46,7 @@ router.patch('/:id/destock', quantityValidator, async (req, res) => {
     res.status(400).send('Bad request');
   }
 });
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', userValidator, async (req, res) => {
   const {id} = req.params;
   const status = await productController.deleteProductById(id);
   res.json([status]);

@@ -24,7 +24,10 @@ const productSchema = new mongoose.Schema({
     min: 0
   }
 
-}, {timestamps: true, toJSON: {virtuals: true}});
+}, {toJSON: {virtuals: true, transform(doc, ret, options) {
+  delete ret.__v;
+  return ret;
+}}}, {timestamps: true});
 
 productSchema.virtual('status').get(function () {
   if (this.quantity > 2) {

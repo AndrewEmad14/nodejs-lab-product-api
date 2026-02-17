@@ -11,6 +11,11 @@ const findProductsbyUserId = async (userId) => {
     .exec();
   return product;
 };
+const findById = async (productId) => {
+  const product = await Products.findOne({_id: productId})
+    .exec();
+  return product;
+};
 const findAllProducts = async (limit, skip, status) => {
   let query;
   if (status === 'available') {
@@ -49,5 +54,6 @@ module.exports = {
   updateProduct,
   deleteProductById,
   restockProduct,
-  destockProduct
+  destockProduct,
+  findById
 };

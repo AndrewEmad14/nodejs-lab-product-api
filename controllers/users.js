@@ -17,7 +17,11 @@ const findAllUsers = async () => {
     .exec();
   return usersList;
 };
-
+const findUser = async (username) => {
+  const user = await Users.findOne({userName: username})
+    .exec();
+  return user;
+};
 const deleteUserById = async (id) => {
   const status = await Users.deleteOne({_id: id}).exec();
   return status;
@@ -32,5 +36,6 @@ module.exports = {
   findById,
   findAllUsers,
   deleteUserById,
-  updateUser
+  updateUser,
+  findUser
 };
